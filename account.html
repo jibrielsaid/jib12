@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - TECHPARTS HUB</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/jpg" href="image/gus1.jpg">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="api.js"></script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .account-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 70vh;
+            padding: 20px;
+        }
+
+        .account-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px;
+            padding: 40px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .account-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .account-tab {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: #999;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .account-tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .account-tab:hover {
+            color: #667eea;
+        }
+
+        .account-form {
+            margin-top: 20px;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .form-field {
+            margin-bottom: 18px;
+        }
+
+        .form-field label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .form-field input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .form-field input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-field input::placeholder {
+            color: #bbb;
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .logout-btn:active {
+            transform: translateY(0);
+        }
+
+        .account-message {
+            padding: 14px 16px;
+            margin-top: 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            border-left: 4px solid;
+            animation: slideInMessage 0.3s ease-out;
+        }
+
+        @keyframes slideInMessage {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            border-left-color: #c62828;
+        }
+
+        .success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border-left-color: #2e7d32;
+        }
+
+        .info {
+            background: #e3f2fd;
+            color: #1565c0;
+            border-left-color: #1565c0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .account-card {
+                padding: 25px;
+            }
+
+            .account-tabs {
+                margin-bottom: 20px;
+            }
+
+            .account-tab {
+                font-size: 13px;
+                padding: 10px 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ================= NAVIGATION ================= -->
+<nav class="navbar">
+    <div class="logo"><h1>TECHPARTS HUB</h1></div>
+
+    <ul class="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        
+        <li><a href="AboutUs.html">About Us</a></li>
+        <li><a href="#" id="nav-account" class="active">My Account</a></li>
+    </ul>
+</nav>
+
+
+<!-- ================= ACCOUNT CARD ================= -->
+<section class="account-section">
+    <div class="account-card">
+
+        <!-- TABS -->
+        <div class="account-tabs">
+            <button class="account-tab active" data-tab="signup">Create Account</button>
+            <button class="account-tab" data-tab="login">Login</button>
+        </div>
+
+        <!-- MESSAGES -->
+        <div id="form-message" class="account-message" style="display:none;"></div>
+
+        <!-- REGISTER FORM -->
+        <form id="signup-form" class="account-form" data-form="signup">
+            <div class="form-field">
+                <label>Full name</label>
+                <input id="name" type="text" placeholder="Your full name" required>
+            </div>
+
+            <div class="form-field">
+                <label>Email</label>
+                <input id="email" type="email" placeholder="you@example.com" required>
+            </div>
+
+            <div class="form-field">
+                <label>Phone Number</label>
+                <input id="phone" type="tel" placeholder="+63 912 345 6789" required>
+            </div>
+
+            <div class="form-field">
+                <label>Address</label>
+                <input id="address" type="text" placeholder="Your complete address" required>
+            </div>
+
+            <div class="form-field">
+                <label>Password</label>
+                <input id="password" type="password" placeholder="Choose a password" required>
+            </div>
+
+            <div class="form-field">
+                <label>Confirm Password</label>
+                <input id="confirm" type="password" placeholder="Repeat password" required>
+            </div>
+
+            <button type="submit" class="logout-btn">Create Account</button>
+        </form>
+
+
+        <form id="login-form" class="account-form" data-form="login" style="display:none;">
+            <div class="form-field">
+                <label>Email</label>
+                <input id="login-email" type="email" placeholder="you@example.com" required>
+            </div>
+
+            <div class="form-field">
+                <label>Password</label>
+                <input id="login-password" type="password" placeholder="Your password" required>
+            </div>
+
+            <button type="submit" class="logout-btn">Log In</button>
+        </form>
+
+    </div>
+</section>
+
+<footer>
+    <p>Copyright © TECHPARTS HUB</p>
+</footer>
+
+
+
+<script>
+const tabs = document.querySelectorAll(".account-tab");
+const forms = document.querySelectorAll(".account-form");
+
+function setTab(tabName){
+    tabs.forEach(t => t.classList.toggle("active", t.dataset.tab === tabName));
+    forms.forEach(f => f.style.display = (f.dataset.form === tabName ? "block" : "none"));
+}
+
+tabs.forEach(tab => tab.addEventListener("click", () => setTab(tab.dataset.tab)));
+
+// Email validation helper
+function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+// Show message helper
+function showMessage(text, type) {
+    const msg = document.getElementById("form-message");
+    msg.textContent = text;
+    msg.className = "account-message " + type;
+    msg.style.display = "block";
+}
+
+// SIGNUP FORM
+document.getElementById("signup-form").addEventListener("submit", async function(e){
+    e.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const address = document.getElementById("address").value.trim();
+    const pw = document.getElementById("password").value;
+    const cpw = document.getElementById("confirm").value;
+
+    // Validation
+    if (!name) {
+        showMessage("Please enter your full name.", "error");
+        return;
+    }
+
+    if (!email) {
+        showMessage("Please enter your email address.", "error");
+        return;
+    }
+
+    if (!isValidEmail(email)) {
+        showMessage("Please enter a valid email address.", "error");
+        return;
+    }
+
+    if (!phone) {
+        showMessage("Please enter your phone number.", "error");
+        return;
+    }
+
+    if (!address) {
+        showMessage("Please enter your address.", "error");
+        return;
+    }
+
+    if (!pw) {
+        showMessage("Please enter a password.", "error");
+        return;
+    }
+
+    if (pw.length < 6) {
+        showMessage("Password must be at least 6 characters long.", "error");
+        return;
+    }
+
+    if (pw !== cpw) {
+        showMessage("Passwords do not match.", "error");
+        return;
+    }
+
+    // Use API to register
+    try {
+        const response = await API.auth.register({ name, email, phone, address, password: pw });
+        showMessage("Account created successfully! Switching to login...", "success");
+
+        setTimeout(() => {
+            setTab("login");
+            document.getElementById("login-email").value = email;
+            document.getElementById("login-password").value = "";
+            // Clear signup form
+            document.getElementById("name").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("phone").value = "";
+            document.getElementById("address").value = "";
+            document.getElementById("password").value = "";
+            document.getElementById("confirm").value = "";
+        }, 1200);
+    } catch (error) {
+        showMessage(error.message || "Registration failed. Please try again.", "error");
+    }
+});
+
+// LOGIN FORM
+document.getElementById("login-form").addEventListener("submit", async function(e){
+    e.preventDefault();
+
+    const email = document.getElementById("login-email").value.trim();
+    const pw = document.getElementById("login-password").value;
+
+    // Validation
+    if (!email || !pw) {
+        showMessage("Please enter both email and password.", "error");
+        return;
+    }
+
+    // Use API to login
+    try {
+        const response = await API.auth.login(email, pw);
+        
+        // Restore user's cart from database
+        try {
+            const cart = await API.cart.getCart();
+            localStorage.setItem("cart", JSON.stringify(cart));
+        } catch (e) {
+            // If cart fetch fails, start with empty cart
+            localStorage.setItem("cart", JSON.stringify([]));
+        }
+
+        // Create session
+        try {
+            const session = { 
+                name: response.user.name || "", 
+                email: response.user.email || "", 
+                started: Date.now() 
+            };
+            sessionStorage.setItem("session", JSON.stringify(session));
+        } catch (e) {}
+
+        showMessage("Login successful! Redirecting...", "success");
+
+        setTimeout(() => {
+            // Check for redirect parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const next = urlParams.get('next') || 'shop.html';
+            window.location.href = next;
+        }, 800);
+    } catch (error) {
+        showMessage(error.message || "Login failed. Please check your credentials.", "error");
+    }
+});
+</script>
+
+</body>
+</html>

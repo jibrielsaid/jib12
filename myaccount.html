@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - SHOELUTION</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/jpg" href="image/gus1.jpg">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        .info-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        
+        .info-input:focus {
+            outline: none;
+            border-color: #00d4ff;
+        }
+        
+        .info-display {
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 6px;
+        }
+        
+        .message {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        
+        .message.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border-left: 4px solid #2e7d32;
+        }
+        
+        .message.error {
+            background: #ffebee;
+            color: #c62828;
+            border-left: 4px solid #c62828;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo"><h1>TECH PARTS HUB</h1></div>
+    <ul class="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="AboutUs.html">About Us</a></li>
+        <li> 
+            <a href="myaccount.html" class="active">My Account</a>
+            <a href="cart.html" style="margin-left: 15px;">
+                <i class="fa-solid fa-cart-shopping" style="font-size: 22px; color: white;"></i>
+            </a>
+        </li>
+        <li id="nav-user" style="display:none;">
+            <span id="nav-username" style="color:#ddd; margin-left:8px;"></span>
+            <button id="nav-logout"
+                style="margin-left:8px; background:transparent; border:1px solid rgba(255,255,255,0.06); color:#ddd;
+                padding:4px 8px; border-radius:4px; cursor:pointer;">Logout</button>
+        </li>
+    </ul>
+</nav>
+
+<!-- ACCOUNT SECTION -->
+<section style="padding:4rem 1rem; display:flex; justify-content:center;">
+    <div style="background:#fff; color:#111; max-width:520px; width:100%; border-radius:10px; padding:2rem;">
+        <h2 style="margin-top:0;">My Account</h2>
+        <p style="color:#666;">Account details for the currently signed-in user.</p>
+        
+        <div id="message" class="message"></div>
+
+        <div style="margin-top:1rem;">
+            <label style="font-weight:700;">Full name</label>
+            <div id="user-name-display" class="info-display">—</div>
+            <input type="text" id="user-name-input" class="info-input" style="display:none;" placeholder="Enter your full name">
+        </div>
+
+        <div style="margin-top:1rem;">
+            <label style="font-weight:700;">Email</label>
+            <div id="user-email-display" class="info-display">—</div>
+            <input type="email" id="user-email-input" class="info-input" style="display:none;" placeholder="Enter your email">
+        </div>
+
+        <div style="margin-top:1rem;">
+            <label style="font-weight:700;">Phone Number</label>
+            <div id="user-phone-display" class="info-display">—</div>
+            <input type="tel" id="user-phone-input" class="info-input" style="display:none;" placeholder="Enter your phone number">
+        </div>
+
+        <div style="margin-top:1rem;">
+            <label style="font-weight:700;">Address</label>
+            <div id="user-address-display" class="info-display" style="min-height:40px;">—</div>
+            <textarea id="user-address-input" class="info-input" style="display:none; min-height:60px; resize:vertical;" placeholder="Enter your address"></textarea>
+        </div>
+
+        <div style="margin-top:1rem;">
+            <label style="font-weight:700;">Member Since</label>
+            <div id="user-member-since" style="padding:10px; background:#f5f5f5; border-radius:6px;">—</div>
+        </div>
+
+        <div style="margin-top:1rem;">
+            <label style="font-weight:700;">Account Status</label>
+            <div id="user-status" style="padding:10px; background:#e8f5e9; border-radius:6px; color:#2e7d32; font-weight:600; display:inline-block; min-width:80px; text-align:center;">—</div>
+        </div>
+
+        <div style="margin-top:1.5rem; display:flex; gap:10px; justify-content:flex-end;">
+            <button id="edit-account"
+                style="background:transparent; border:1px solid rgba(0,0,0,0.08); padding:8px 12px; border-radius:6px; cursor:pointer;">
+                Edit
+            </button>
+            
+            <button id="save-account" style="display:none; background:#00d4ff; color:#111; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; font-weight:600;">
+                Save
+            </button>
+            
+            <button id="cancel-edit" style="display:none; background:transparent; border:1px solid rgba(0,0,0,0.08); padding:8px 12px; border-radius:6px; cursor:pointer;">
+                Cancel
+            </button>
+
+            <button id="logout-btn"
+                style="background:#B8860B; color:#111; border:none; padding:8px 12px; border-radius:6px; cursor:pointer;">
+                Logout
+            </button>
+        </div>
+
+        <p style="margin-top:1rem; color:#666;"><a href="shop.html">← Back to Shop</a></p>
+    </div>
+</section>
+
+    <footer>
+        <p>Copyright © <a href="#">SHOELUTION</a></p>
+    </footer><!-- FIXED SCRIPT -->
+<script>
+(function(){
+
+    function redirectToLogin() {
+        window.location.href = "account.html?next=myaccount.html";
+    }
+
+    // Load user data - prioritize localStorage user data for complete information
+    let user = null;
+    let raw = localStorage.getItem("user");
+    
+    if (raw) {
+        try { 
+            user = JSON.parse(raw); 
+        } catch(e) { 
+            // If parsing fails, try to get from accounts array
+        }
+    }
+    
+    // If no user in localStorage, check sessionStorage and get full account from accounts array
+    if (!user || !user.email) {
+        const sessionRaw = sessionStorage.getItem("session");
+        if (sessionRaw) {
+            try {
+                const session = JSON.parse(sessionRaw);
+                if (session.email) {
+                    // Get full account data from accounts array
+                    const accounts = JSON.parse(localStorage.getItem("accounts") || "[]");
+                    const account = accounts.find(acc => acc.email && acc.email.toLowerCase() === session.email.toLowerCase());
+                    if (account) {
+                        user = account;
+                        // Update localStorage with full account data
+                        localStorage.setItem("user", JSON.stringify(account));
+                    }
+                }
+            } catch(e) {}
+        }
+    }
+    
+    if (!user || !user.email) {
+        return redirectToLogin();
+    }
+
+    // Store original user data for cancel functionality
+    let originalUserData = JSON.parse(JSON.stringify(user));
+    
+    // Fill User Info
+    function displayUserInfo() {
+        document.getElementById("user-name-display").textContent = user.name || "—";
+        document.getElementById("user-email-display").textContent = user.email || "—";
+        
+        // Additional user information - display actual values from account creation
+        const phoneValue = user.phone ? user.phone.trim() : "";
+        const addressValue = user.address ? user.address.trim() : "";
+        
+        document.getElementById("user-phone-display").textContent = phoneValue || "Not provided";
+        document.getElementById("user-address-display").textContent = addressValue || "Not provided";
+    }
+    
+    displayUserInfo();
+    
+    // Member since date - use account creation date or current date
+    if (user.memberSince) {
+        const memberDate = new Date(user.memberSince);
+        document.getElementById("user-member-since").textContent = memberDate.toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
+    } else {
+        // If no memberSince date, use current date as default
+        const today = new Date();
+        document.getElementById("user-member-since").textContent = today.toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
+    }
+    
+    // Account status with styling
+    const statusEl = document.getElementById("user-status");
+    const status = user.status || "Active";
+    statusEl.textContent = status;
+    
+    // Apply different colors based on status
+    if (status.toLowerCase() === "active") {
+        statusEl.style.background = "#e8f5e9";
+        statusEl.style.color = "#2e7d32";
+    } else if (status.toLowerCase() === "inactive" || status.toLowerCase() === "suspended") {
+        statusEl.style.background = "#ffebee";
+        statusEl.style.color = "#c62828";
+    } else {
+        statusEl.style.background = "#fff3e0";
+        statusEl.style.color = "#e65100";
+    }
+
+    // Navbar display
+    const navUser = document.getElementById("nav-user");
+    const navName = document.getElementById("nav-username");
+
+    if (navUser) {
+        navUser.style.display = "";
+        navName.textContent = user.name || "Account";
+    }
+
+    // LOGOUT function
+    function logoutNow(){
+        // Save current cart to user account before logout
+        try {
+            const cartRaw = localStorage.getItem('cart');
+            if (cartRaw) {
+                const cart = JSON.parse(cartRaw);
+                const userRaw = localStorage.getItem('user');
+                if (userRaw) {
+                    const user = JSON.parse(userRaw);
+                    const accounts = JSON.parse(localStorage.getItem('accounts') || '[]');
+                    const accountIndex = accounts.findIndex(acc => acc.email && acc.email.toLowerCase() === user.email.toLowerCase());
+                    if (accountIndex !== -1) {
+                        accounts[accountIndex].cart = cart;
+                        localStorage.setItem('accounts', JSON.stringify(accounts));
+                    }
+                }
+            }
+        } catch (e) {}
+        
+        // Remove current user session and cart, but keep accounts list for future logins
+        localStorage.removeItem("user");
+        sessionStorage.removeItem("session");
+        localStorage.removeItem("cart"); // Clear cart on logout
+        window.location.href = "index.html";
+    }
+
+    document.getElementById("logout-btn").addEventListener("click", logoutNow);
+    document.getElementById("nav-logout").addEventListener("click", logoutNow);
+
+    // EDIT functionality
+    document.getElementById("edit-account").addEventListener("click", function(){
+        enterEditMode();
+    });
+    
+    // CANCEL edit
+    document.getElementById("cancel-edit").addEventListener("click", function(){
+        cancelEdit();
+    });
+    
+    // SAVE changes
+    document.getElementById("save-account").addEventListener("click", function(){
+        saveUserInfo();
+    });
+    
+    function enterEditMode() {
+        // Hide display divs, show input fields
+        document.getElementById("user-name-display").style.display = "none";
+        document.getElementById("user-email-display").style.display = "none";
+        document.getElementById("user-phone-display").style.display = "none";
+        document.getElementById("user-address-display").style.display = "none";
+        
+        document.getElementById("user-name-input").style.display = "block";
+        document.getElementById("user-email-input").style.display = "block";
+        document.getElementById("user-phone-input").style.display = "block";
+        document.getElementById("user-address-input").style.display = "block";
+        
+        // Populate input fields with current values
+        document.getElementById("user-name-input").value = user.name || "";
+        document.getElementById("user-email-input").value = user.email || "";
+        document.getElementById("user-phone-input").value = user.phone || "";
+        document.getElementById("user-address-input").value = user.address || "";
+        
+        // Show/hide buttons
+        document.getElementById("edit-account").style.display = "none";
+        document.getElementById("save-account").style.display = "block";
+        document.getElementById("cancel-edit").style.display = "block";
+        document.getElementById("logout-btn").style.display = "none";
+        
+        // Hide message
+        document.getElementById("message").style.display = "none";
+    }
+    
+    function cancelEdit() {
+        // Show display divs, hide input fields
+        document.getElementById("user-name-display").style.display = "block";
+        document.getElementById("user-email-display").style.display = "block";
+        document.getElementById("user-phone-display").style.display = "block";
+        document.getElementById("user-address-display").style.display = "block";
+        
+        document.getElementById("user-name-input").style.display = "none";
+        document.getElementById("user-email-input").style.display = "none";
+        document.getElementById("user-phone-input").style.display = "none";
+        document.getElementById("user-address-input").style.display = "none";
+        
+        // Restore original values
+        user = JSON.parse(JSON.stringify(originalUserData));
+        displayUserInfo();
+        
+        // Show/hide buttons
+        document.getElementById("edit-account").style.display = "block";
+        document.getElementById("save-account").style.display = "none";
+        document.getElementById("cancel-edit").style.display = "none";
+        document.getElementById("logout-btn").style.display = "block";
+    }
+    
+    function showMessage(text, type) {
+        const messageEl = document.getElementById("message");
+        messageEl.textContent = text;
+        messageEl.className = "message " + type;
+        messageEl.style.display = "block";
+        
+        // Auto hide after 3 seconds
+        setTimeout(() => {
+            messageEl.style.display = "none";
+        }, 3000);
+    }
+    
+    function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+    
+    function saveUserInfo() {
+        // Get values from input fields
+        const name = document.getElementById("user-name-input").value.trim();
+        const email = document.getElementById("user-email-input").value.trim();
+        const phone = document.getElementById("user-phone-input").value.trim();
+        const address = document.getElementById("user-address-input").value.trim();
+        
+        // Validation
+        if (!name) {
+            showMessage("Please enter your full name.", "error");
+            return;
+        }
+        
+        if (!email) {
+            showMessage("Please enter your email address.", "error");
+            return;
+        }
+        
+        if (!isValidEmail(email)) {
+            showMessage("Please enter a valid email address.", "error");
+            return;
+        }
+        
+        if (!phone) {
+            showMessage("Please enter your phone number.", "error");
+            return;
+        }
+        
+        if (!address) {
+            showMessage("Please enter your address.", "error");
+            return;
+        }
+        
+        // Check if email is being changed and if it already exists
+        if (email.toLowerCase() !== user.email.toLowerCase()) {
+            const accounts = JSON.parse(localStorage.getItem("accounts") || "[]");
+            const existingAccount = accounts.find(acc => 
+                acc.email && acc.email.toLowerCase() === email.toLowerCase() &&
+                acc.email.toLowerCase() !== user.email.toLowerCase()
+            );
+            
+            if (existingAccount) {
+                showMessage("An account with this email already exists.", "error");
+                return;
+            }
+        }
+        
+        // Update user object
+        const oldEmail = user.email;
+        user.name = name;
+        user.email = email;
+        user.phone = phone;
+        user.address = address;
+        
+        // Update localStorage user
+        localStorage.setItem("user", JSON.stringify(user));
+        
+        // Update accounts array
+        try {
+            const accounts = JSON.parse(localStorage.getItem("accounts") || "[]");
+            const accountIndex = accounts.findIndex(acc => 
+                acc.email && acc.email.toLowerCase() === oldEmail.toLowerCase()
+            );
+            
+            if (accountIndex !== -1) {
+                // Preserve password and other fields
+                accounts[accountIndex].name = name;
+                accounts[accountIndex].email = email;
+                accounts[accountIndex].phone = phone;
+                accounts[accountIndex].address = address;
+                
+                // If email changed, update session
+                if (email.toLowerCase() !== oldEmail.toLowerCase()) {
+                    const session = JSON.parse(sessionStorage.getItem("session") || "{}");
+                    session.email = email;
+                    sessionStorage.setItem("session", JSON.stringify(session));
+                }
+                
+                localStorage.setItem("accounts", JSON.stringify(accounts));
+            }
+        } catch (e) {
+            console.error("Error updating accounts:", e);
+        }
+        
+        // Update original data
+        originalUserData = JSON.parse(JSON.stringify(user));
+        
+        // Update navbar name if it changed
+        const navName = document.getElementById("nav-username");
+        if (navName) {
+            navName.textContent = user.name || "Account";
+        }
+        
+        // Exit edit mode
+        cancelEdit();
+        
+        // Show success message
+        showMessage("Account information updated successfully!", "success");
+    }
+
+})();
+</script>
+
+</body>
+</html>
